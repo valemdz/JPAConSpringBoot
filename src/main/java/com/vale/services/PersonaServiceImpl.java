@@ -20,9 +20,9 @@ public class PersonaServiceImpl implements PersonaService {
 	@Override
 	public Persona getPersona(Long id) {
 		
-		//Persona persona = em.find( Persona.class, id );
+		Persona persona = em.find( Persona.class, id );
 		
-		Persona persona = em.getReference( Persona.class, id );		
+		//Persona persona = em.getReference( Persona.class, id );		
 		return persona;
 	}
 

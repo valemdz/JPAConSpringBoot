@@ -1,6 +1,10 @@
 package com.vale.controllers;
 
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +19,11 @@ import com.vale.services.PersonaService;
 @RestController
 public class MiController {
 	
+	private Logger logger = LoggerFactory.getLogger( MiController.class );
+	
+	/*@Value("${spring.jpa.open-in-view}")
+	private String openInView;*/
+	
 	@Autowired PersonaService personaService;
 	
 	@GetMapping("/")
@@ -28,7 +37,7 @@ public class MiController {
 	@GetMapping("/persona/{id}")
 	@ResponseStatus( HttpStatus.OK )
 	public Persona getPersona( @PathVariable  Long id ){		
-		Persona persona = personaService.getPersona(id);
+		Persona persona = personaService.getPersona(id);		
 		return persona;
 	}
 	
@@ -43,6 +52,20 @@ public class MiController {
 	public String consultaMunicipio( @PathVariable  Long id ){		
 		Persona persona = personaService.getPersona(id);		
 		return persona.getMunicipio();
+	}
+	
+	@GetMapping("/consulta/{id}")
+	@ResponseStatus( HttpStatus.OK )
+	public boolean getConsulta( @PathVariable  Long id ){	
+		log();
+		Persona primera = personaService.getPersona(id);
+		Persona segunda = personaService.getPersona(id);
+		return primera == segunda;
+	}
+	
+	private void log() {
+		logger.info("El sistema open en view que estamos utilizando" + true);
+		
 	}
 	
 }
