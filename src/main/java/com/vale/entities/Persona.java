@@ -16,7 +16,8 @@ public class Persona implements Serializable {
 	private Long id;
 	private String nombre;
 	@Column( unique = true )
-	private String dni;
+	private String dni;	
+	private String municipio;
 	
 	public Persona() {		
 	}	
@@ -43,6 +44,15 @@ public class Persona implements Serializable {
 
 	public void setDni(String dni) {
 		this.dni = dni;
+	}
+	
+
+	public String getMunicipio() {
+		return municipio;
+	}
+
+	public void setMunicipio(String municipio) {
+		this.municipio = municipio;
 	}
 
 	@Override

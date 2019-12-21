@@ -38,4 +38,11 @@ public class MiController {
 		return personaService.createPersona(persona);		
 	}
 	
+	@GetMapping("/consultaMunicipio/{id}")
+	@ResponseStatus( HttpStatus.OK )
+	public String consultaMunicipio( @PathVariable  Long id ){		
+		Persona persona = personaService.getPersona(id);		
+		return persona.getMunicipio();
+	}
+	
 }
