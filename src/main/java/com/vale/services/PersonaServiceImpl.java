@@ -20,8 +20,16 @@ public class PersonaServiceImpl implements PersonaService {
 	@Autowired AuditoriaService auditoriaService;
 	
 	@Override
+	@Transactional( readOnly = false )
 	public Persona getPersona(Long id) {
-		Persona persona = em.find( Persona.class, id );
+		
+		Persona persona = em.find( Persona.class, id );		
+		auditoriaService.log( persona );
+		
+		if( persona.getConsultas() > 3  ) {
+			throw new RuntimeException("Demasiadas Consultas");
+		}
+		
 		return persona;
 	}
 

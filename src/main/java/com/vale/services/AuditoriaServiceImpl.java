@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.vale.entities.Auditoria;
+import com.vale.entities.Persona;
 
 
 @Service
@@ -20,6 +21,18 @@ public class AuditoriaServiceImpl implements AuditoriaService {
 	@PersistenceContext
 	EntityManager em;
 
+	
+   public void log (Persona persona) {
+		
+		Auditoria auditoria = new Auditoria();
+		String mensaje = String.format("Consulta num %d a %s", persona.getConsultas(), persona.getNombre());
+		auditoria.setEvent(mensaje);
+
+		persona.setConsultas(persona.getConsultas()+1);
+
+		em.persist(auditoria);
+	}
+	
 
 	@Override
 	public void log(String event) {

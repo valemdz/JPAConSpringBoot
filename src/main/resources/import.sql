@@ -1,2 +1,2 @@
-insert into persona( nombre, dni) values ('valeria','266686660');
-insert into persona( nombre, dni) values ('susana','541236363');
+insert into persona( nombre, dni, consultas) values ('valeria','266686660',0);
+insert into persona( nombre, dni, consultas) values ('susana','541236363',0);

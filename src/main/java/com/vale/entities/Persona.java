@@ -17,6 +17,7 @@ public class Persona implements Serializable {
 	private String nombre;
 	@Column( unique = true )
 	private String dni;
+	private int consultas;
 	
 	public Persona() {		
 	}	
@@ -43,6 +44,16 @@ public class Persona implements Serializable {
 
 	public void setDni(String dni) {
 		this.dni = dni;
+	}
+	
+	
+
+	public int getConsultas() {
+		return consultas;
+	}
+
+	public void setConsultas(int consultas) {
+		this.consultas = consultas;
 	}
 
 	@Override
@@ -80,11 +91,7 @@ public class Persona implements Serializable {
 		return true;
 	}
 
-	@Override
-	public String toString() {
-		return "Persona [id=" + id + ", nombre=" + nombre + ", dni=" + dni + "]";
-	}
-	
+
 	
 	
 
