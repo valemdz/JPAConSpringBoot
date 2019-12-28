@@ -67,7 +67,7 @@ public class PersonaServiceImpl implements PersonaService {
 
 
 	@Override
-	@Transactional( readOnly = true )
+	@Transactional( readOnly = false )
 	public List<Persona> consulta() {
 		
 		List<Persona> personas = new ArrayList< Persona >( (MILES * 1000)  );
@@ -89,4 +89,52 @@ public class PersonaServiceImpl implements PersonaService {
 		
 	}
 
+	@Override
+	@Transactional( readOnly = true )
+	public List<Persona> consultaSoloLectura() {
+		
+		List<Persona> personas = new ArrayList< Persona >( (MILES * 1000)  );
+		
+		
+		TypedQuery<Persona> query = em.createQuery( "Select p from Persona p where p.id >= :inicio and p.id <= :fin ", 
+													Persona.class );
+		
+		
+		for( int i=0; i < MILES; i++ ) {
+			
+			query.setParameter("inicio", ( i*1000L ) + 1 );
+			query.setParameter("fin", ( i+1 ) * 1000L );
+			
+			personas.addAll( query.getResultList() );
+		}
+		
+		return personas;
+		
+	}
+	
+	
+	@Override
+	@Transactional( readOnly = false )
+	public List<Persona> consultaLimpiandoEntityManager() {
+		
+		List<Persona> personas = new ArrayList< Persona >( (MILES * 1000)  );
+		
+		
+		TypedQuery<Persona> query = em.createQuery( "Select p from Persona p where p.id >= :inicio and p.id <= :fin ", 
+													Persona.class );
+		
+		
+		for( int i=0; i < MILES; i++ ) {
+			
+			query.setParameter("inicio", ( i*1000L ) + 1 );
+			query.setParameter("fin", ( i+1 ) * 1000L );
+			
+			personas.addAll( query.getResultList() );
+			em.clear();
+		}
+		
+		return personas;
+		
+	}
+	
 }

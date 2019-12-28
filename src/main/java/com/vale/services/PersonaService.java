@@ -10,4 +10,6 @@ public interface PersonaService {
 	Persona modifica( Long id,  Persona persona );
 	void init();
 	List<Persona> consulta();
+	List<Persona> consultaSoloLectura();
+	List<Persona> consultaLimpiandoEntityManager();
 }

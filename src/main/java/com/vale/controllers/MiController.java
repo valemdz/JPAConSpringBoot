@@ -95,7 +95,7 @@ public class MiController {
 	
 	@GetMapping("/consulta")
 	@ResponseStatus( HttpStatus.OK )
-	public List<Persona> getConsulta(  ){	
+	public int getConsulta(  ){	
 		
 		StopWatch sp = new StopWatch();
 		sp.start("consulta");
@@ -105,9 +105,43 @@ public class MiController {
 		
 		sp.stop();
 		logger.info( sp.prettyPrint());
-		logger.info( "Segundos" + String.valueOf( sp.getTotalTimeSeconds() ));
+		logger.info( "Segundos Consulta Comun:  " + String.valueOf( sp.getTotalTimeSeconds() ));
 		
-		return personas;
+		return personas.size();
+	}
+	
+	@GetMapping("/consultaLipiandoEM")
+	@ResponseStatus( HttpStatus.OK )
+	public int getConsultaMejoradaUno( ){	
+		
+		StopWatch sp = new StopWatch();
+		sp.start("consulta");
+		
+		List<Persona> personas = personaService.consultaLimpiandoEntityManager();
+		
+		
+		sp.stop();
+		logger.info( sp.prettyPrint());
+		logger.info( "Segundos ConsultaLipiandoEM: " + String.valueOf( sp.getTotalTimeSeconds() ));
+		
+		return personas.size();
+	}
+	
+	@GetMapping("/consultaSoloLectura")
+	@ResponseStatus( HttpStatus.OK )
+	public int getConsultaSoloLectura( ){	
+		
+		StopWatch sp = new StopWatch();
+		sp.start("consulta");
+		
+		List<Persona> personas = personaService.consultaSoloLectura();
+		
+		
+		sp.stop();
+		logger.info( sp.prettyPrint());
+		logger.info( "Segundos ConsultaSoloLectura: " + String.valueOf( sp.getTotalTimeSeconds() ));
+		
+		return personas.size();
 	}
 	
 	
