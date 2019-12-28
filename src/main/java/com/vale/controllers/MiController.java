@@ -1,14 +1,20 @@
 package com.vale.controllers;
 
 
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.util.StopWatch;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -63,9 +69,46 @@ public class MiController {
 		return primera == segunda;
 	}
 	
+	@PutMapping("/persona/{id}")
+	@ResponseStatus( HttpStatus.OK )
+	public String modificarPersona(@PathVariable Long id, @RequestBody Persona persona ) {
+		 personaService.modifica( id, persona);
+		 return personaService.getPersona(id).getNombre();
+	}
+	
 	private void log() {
 		logger.info("El sistema open en view que estamos utilizando" + true);
 		
 	}
+	
+	
+	@PostConstruct
+	void init() {
+		
+		logger.info("Iniciando la base de datos");
+		
+		personaService.init();
+		
+		logger.info("Finalizacion inicializacion!!!");
+	}
+	
+	
+	@GetMapping("/consulta")
+	@ResponseStatus( HttpStatus.OK )
+	public List<Persona> getConsulta(  ){	
+		
+		StopWatch sp = new StopWatch();
+		sp.start("consulta");
+		
+		List<Persona> personas = personaService.consulta();
+		
+		
+		sp.stop();
+		logger.info( sp.prettyPrint());
+		logger.info( "Segundos" + String.valueOf( sp.getTotalTimeSeconds() ));
+		
+		return personas;
+	}
+	
 	
 }
