@@ -3,7 +3,7 @@ package com.vale.services;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,11 +11,13 @@ import com.vale.entities.Persona;
 
 
 @Service
-@Transactional( readOnly = true )
+@Transactional
 public class PersonaServiceImpl implements PersonaService {
 	
 	@PersistenceContext 
 	EntityManager em;
+	
+	@Autowired WebService webService;
 	
 	@Override
 	public Persona getPersona(Long id) {
@@ -31,6 +33,16 @@ public class PersonaServiceImpl implements PersonaService {
 		em.persist(persona);
 		
 		return persona;
+	}
+
+
+	@Override
+	public String consultaAntecedentes(Long id) {
+		Persona persona = em.find( Persona.class, id );
+		
+		String respAntecedentes = webService.consultaAntecedentes( persona );
+		
+		return respAntecedentes;
 	}
 
 }

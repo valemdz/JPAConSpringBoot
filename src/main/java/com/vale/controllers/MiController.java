@@ -38,4 +38,12 @@ public class MiController {
 		return personaService.createPersona(persona);		
 	}
 	
+	
+	@GetMapping("/antecedenetes/{id}")
+	@ResponseStatus( HttpStatus.OK )
+	public String consultaAntecedentes( @PathVariable  Long id ){		
+		String respuesta = personaService.consultaAntecedentes(id);
+		return respuesta;
+	}
+	
 }
