@@ -11,9 +11,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.vale.entities.Persona;
 import com.vale.services.PersonaService;
+import com.vale.services.WebService;
 
 @RestController
 public class MiController {
+	
+	@Autowired WebService webService;
 	
 	@Autowired PersonaService personaService;
 	
@@ -41,9 +44,14 @@ public class MiController {
 	
 	@GetMapping("/antecedenetes/{id}")
 	@ResponseStatus( HttpStatus.OK )
-	public String consultaAntecedentes( @PathVariable  Long id ){		
-		String respuesta = personaService.consultaAntecedentes(id);
-		return respuesta;
+	public String consultaAntecedentes( @PathVariable  Long id ){	
+		
+		Persona persona = personaService.getPersona(id);
+		
+		String respAntecedentes = webService.consultaAntecedentes( persona );
+		
+		
+		return respAntecedentes;
 	}
 	
 }
